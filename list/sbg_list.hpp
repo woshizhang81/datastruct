@@ -81,7 +81,34 @@ public:
         }
         return nullptr;
     }
-
+    //有效的删除节点的方法 //把cur的next 值复制到当前节点，再删除next
+    void delete_node_effecive(_Node<T> * cur)
+    {
+   //     _Node<T>* nxt = cur->next;
+        if (nullptr == cur->next)
+        {
+            //说明是最后一个节点
+            _Node<T> * cur1 = _head;
+            while (cur1->next != cur)
+                cur1 = cur1->next;
+            cur1->next = cur->next;
+            delete cur;
+        }else {
+            cur->val = cur->next->val;
+            _Node<T> * t = cur->next;
+            cur->next = t->next;
+            delete t;
+        }
+    }
+    void delete_node_1(_Node<T> * dnode) //更简洁
+    {
+        //找前驱动
+        _Node<T> * cur = _head;
+        while(cur->next != dnode)
+            cur = cur->next; //找到前驱
+        cur->next = dnode->next;
+        delete dnode;
+    }
     void delete_node(_Node<T> * dnode)
     {
         _Node<T> * cur = _head;

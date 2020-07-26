@@ -8,11 +8,9 @@ int main()
     //list_tail_test_case();
     //list_test_case();
     //双向列表测试用例
-   // dlist_insert_test_case();
+    //dlist_insert_test_case();
     //dlist_pop_test_case();
-
     //dlist_popback_test_case();
-
-    dlist_sort_test_case();
+    //dlist_sort_test_case();
     return 0;
 }
