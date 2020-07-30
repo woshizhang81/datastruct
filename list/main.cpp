@@ -12,5 +12,6 @@ int main()
     //dlist_pop_test_case();
     //dlist_popback_test_case();
     //dlist_sort_test_case();
+    list_digui_case();
     return 0;
 }

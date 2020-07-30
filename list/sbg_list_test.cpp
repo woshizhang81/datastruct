@@ -95,3 +95,20 @@ void list_test_case()
     list.show_list();
 
 }
+
+
+void list_digui_case()
+{
+    sbg_list<int> list; //带有尾的单向连表
+    list.push(1);
+    list.push(2);
+    list.push(32);
+    list.push(32);
+    list.push(5);
+    list.push(64);
+    list.push(7);
+    list.push(81);
+    list.push(9);
+    list.reverse_2();
+    list.show_list();
+}

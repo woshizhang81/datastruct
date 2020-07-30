@@ -7,6 +7,8 @@ void list_tail_test_case();
 //正常头插法的单向链表测试函数
 void list_test_case();
 
+void list_digui_case();
+
 
 
 

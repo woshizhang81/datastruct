@@ -68,6 +68,23 @@ public:
         }
     }
 
+/*  void reverse_2()
+    {
+        _Node<T> * real = _head->next;
+        _head->next = nullptr;
+        reverse_child(real);
+    }
+
+    void reverse_child (_Node<T> * lst)
+    {
+        if(!lst->next){
+            _head->next = lst;
+            return ;
+        } else {
+             reverse_child(lst->next);
+        }
+    }
+*/
     _Node<T>* find(T val)
     {
         _Node<T> *p = _head->next;
