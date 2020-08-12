@@ -23,7 +23,10 @@ public:
              cb_handle handle = nullptr,
              VER_MODE type = VER_MODE::RECURSION); //默认递归版本
     ~sbg_tree();
-    virtual void insert(T v);
+    void insert(T v);
+    void morris_pre_traverse();
+    void morris_mid_traverse();
+    void morris_post_traverse();
     void pre_traverse();
     void mid_traverse();
     void post_traverse();
@@ -136,6 +139,77 @@ void sbg_tree<T>::insert_c(TNode<T> * node, TNode<T> * new_node)
     }
 }
 
+//空间 o1遍历
+template<typename T>
+void sbg_tree<T>::morris_pre_traverse()
+{
+    TNode<T> * cur          = _root; 
+    TNode<T> * most_right   = nullptr; 
+    while(cur)
+    {
+        if (!cur->_left) //
+        {
+            printf("%d ",cur->value);
+            cur = cur->_right;
+        }else
+        {
+            most_right = cur->_left;
+            while( most_right->_right && most_right->_right != cur )
+            {
+                most_right = most_right->_right;
+            }
+            if (nullptr == most_right->_right)
+            {
+                printf("%d ",cur->value);
+                most_right->_right = cur;
+                cur = cur->_left;
+            }else
+            {
+                most_right->_right = nullptr;
+                cur = cur->_right;
+            }
+        }
+    }
+}
+
+template<typename T>
+void sbg_tree<T>::morris_mid_traverse()
+{
+     
+}
+
+template<typename T>
+void sbg_tree<T>::morris_post_traverse()
+{
+    TNode<T> * cur          = _root; 
+    TNode<T> * most_right   = nullptr; 
+    while(cur)
+    {
+        if (!cur->_left) //
+        {
+            printf("%d ",cur->value);
+            cur = cur->_right;
+        }else
+        {
+            most_right = cur->_left;
+            while( most_right->_right && most_right->_right != cur )
+            {
+                most_right = most_right->_right;
+            }
+            if (nullptr == most_right->_right)
+            {
+                most_right->_right = cur;
+                cur = cur->_left;
+            }else
+            {
+                most_right->_right = nullptr;
+                printf("%d ",cur->value);
+                cur = cur->_right;
+            }
+        }
+    }
+}
+
 template<typename T>
 void sbg_tree<T>::pre_traverse()
 {
@@ -182,7 +256,7 @@ void sbg_tree<T>::traverse_layer()
 }
 
 template<typename T>
-void sbg_tree<T>::insert(T v)
+void sbg_tree<T> :: insert(T v)
 {
     TNode<T> * new_node = new TNode<T> ;
     new_node->value = v;
@@ -417,4 +491,4 @@ void sbg_tree<T>::destrory_c(TNode<T> * troot)
 
 
 
-#endif // SBG_TREE_H
+#endif 

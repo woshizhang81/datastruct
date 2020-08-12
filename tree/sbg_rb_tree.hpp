@@ -78,9 +78,65 @@ public:
     }
 
 private:
-    RBNode<T>* remove(RBNode<T>* node, RBNode<T>* find)
+    RBNode<T>* remove(RBNode<T>* &root, RBNode<T>* find)
     {
+        if (find->_left == nullptr && find->_right == nullptr)
+        {
+            if (find->_parent == nullptr) { 
+                root = nullptr;
+            }else{ 
+                if (rb_parent(find)->_left == find)
+                    rb_parent(find)->_left = nullptr;
+                else 
+                    rb_parent(find)->_right = nullptr;
+                //当前节点为叶子节点
+            }
+        } else if (find->_left != nullptr && find->_right == nullptr) {
+            if (find->_parent == nullptr)
+            {
+                _root = find->_left;
+            }else{
+                if (rb_parent(find)->_left == find)
+                    rb_parent(find)->_left  = find->_left;
+                else
+                    rb_parent(find)->_right = find->_left;
+            }
+        }else if (find->_left == nullptr && find->_right != nullptr) {
+            if (find->_parent == nullptr)
+            {
+                _root = find->_right;
+            }else{
+                if (rb_parent(find)->_left == find)
+                    rb_parent(find)->_left = find->_right; 
+                else
+                    rb_parent(find)->_right = find->_right;
+            }
+        }else{
+            RBNode<T>* replace = find;
+            replace = replace->_right;
+            while(replace)
+            {
+                replace = replace->_left;
+            }
+            //找到最小节点 取代find 的value ，把replace当作要删除的节点
+            find->_value = replace->_value;
+            if (find->_right == replace)
+            {
+                find->_right = replace->_right;
+            }else{
+                //此时被删除节点没有左子树 最多只有又子树
+                rb_parent(replace)->_left = replace->_right;
+            }
+            //用replace 代替 find
+            find  = replace;
+        }
 
+        delete find;
+    }
+
+    RBNode<T>* remove_fix_up(RBNode<T>* &root, RBNode<T>* bdeleted,RBNode<T>* parent)
+    {
+        
     }
 
     RBNode<T>* search(RBNode<T>* node, T v)
@@ -213,34 +269,6 @@ private:
 
     //左旋转
     void left_rotate(RBNode<T> *  & proot  , RBNode<T> *  pnode) {
-        // 设置x的右孩子为y
-    /*    RBNode<T> *y = x->_right;
-
-        // 将 “y的左孩子” 设为 “x的右孩子”；
-        // 如果y的左孩子非空，将 “x” 设为 “y的左孩子的父亲”
-        x->_right = y->_left;
-        if (y->_left != NULL)
-            y->_left->_parent = x;
-
-        // 将 “x的父亲” 设为 “y的父亲”
-        y->_parent = x->_parent;
-
-        if (x->_parent == NULL)
-        {
-            _root = y;            // 如果 “x的父亲” 是空节点，则将y设为根节点
-        }
-        else
-        {
-            if (x->_parent->_left == x)
-                x->_parent->_left = y;    // 如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
-            else
-                x->_parent->_right = y;    // 如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
-        }
-
-        // 将 “x” 设为 “y的左孩子”
-        y->_left = x;
-        // 将 “x的父节点” 设为 “y”
-        x->_parent = y;*/
 
         RBNode<T> *x ,*y ,*px;
         x = pnode;
@@ -268,36 +296,6 @@ private:
     //右旋转
     void right_rotate(RBNode<T> * & proot , RBNode<T> *  pnode){
         // 设置x是当前节点的左孩子。
-       /* RBNode<T> *x = y->_left;
-
-        // 将 “x的右孩子” 设为 “y的左孩子”；
-        // 如果"x的右孩子"不为空的话，将 “y” 设为 “x的右孩子的父亲”
-        y->_left = x->_right;
-        if (x->_right != NULL)
-            x->_right->_parent = y;
-
-        // 将 “y的父亲” 设为 “x的父亲”
-        x->_parent = y->_parent;
-
-        if (y->_parent == NULL)
-        {
-            _root = x;            // 如果 “y的父亲” 是空节点，则将x设为根节点
-        }
-        else
-        {
-            if (y == y->_parent->_right)
-                y->_parent->_right = x;    // 如果 y是它父节点的右孩子，则将x设为“y的父节点的右孩子”
-            else
-                y->_parent->_left = x;    // (y是它父节点的左孩子) 将x设为“x的父节点的左孩子”
-        }
-
-        // 将 “y” 设为 “x的右孩子”
-        x->_right = y;
-
-        // 将 “y的父节点” 设为 “x”
-        y->_parent = x;
-        */
-
         RBNode<T> *x ,*y ,*px;
         x = pnode;
         y = x->_left;
