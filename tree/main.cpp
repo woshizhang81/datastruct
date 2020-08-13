@@ -6,7 +6,31 @@ using namespace std;
 #include "sbg_tree_test.h"
 #include "sbg_rb_tree.hpp"
 #include "sbg_rb_tree_net.hpp"
+
+template<typename T>
+void print_binary( T t)
+{
+    int num_size = sizeof(T)*8;
+    while(num_size--)
+    {
+        auto r = t & (1<<num_size);
+        if (r)
+            printf("1");
+        else {
+            printf("0");
+        }
+        if (num_size % 4 == 0)
+        {
+            printf(" ");
+        }
+    }
+}
 int main()
+{
+    print_binary<int>(-1);
+}
+
+int main1()
 {
     RBTree<int> tr_net;
     tr_net.insert(50);
@@ -50,7 +74,7 @@ int main()
 
 }
 
-int main1()
+int main2()
 {
     sbg_tree_traverse<int> obj;
     obj.insert(1);
@@ -117,7 +141,7 @@ int main1()
     return 0;
 }
 
-int main2()
+int main3()
 {
     test_case_1();
 }

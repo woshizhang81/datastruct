@@ -109,6 +109,6 @@ void list_digui_case()
     list.push(7);
     list.push(81);
     list.push(9);
-    list.reverse_2();
+    //list.reverse_2();
     list.show_list();
 }
